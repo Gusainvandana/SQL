@@ -1,0 +1,167 @@
+SQL> --WAQTD NO OF EMPLOYEES GETTING SAL LESS THAN 2000 IN DEPTNO 10--
+SQL> SELECT COUNT(*)
+  2  FROM EMP
+  3  WHERE SAL < 2000 AND DEPTNO IN '10';
+
+  COUNT(*)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+         1                                                                                                                                                                                              
+
+SQL> --WAQTD TOTAL SAL NEEDED TO PAY EMPLOYEES WORKING AS CLERK--
+SQL> SELECT SUM(SAL)
+  2  FROM EMP
+  3  WHERE JOB IN 'CLERK';
+
+  SUM(SAL)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+      4150                                                                                                                                                                                              
+
+SQL> --WAQTD AVG SAL NEEDED TO PAY ALL EMPLOYEES--
+SQL> SELECT AVG(SAL)
+  2  FROM EMP;
+
+  AVG(SAL)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+2073.21429                                                                                                                                                                                              
+
+SQL> --WAQTD NO OF EMPLOYEES HAVING 'A' AS THEIR FIRST CHARACTER--
+SQL> SELECT COUNT(ENAME)
+  2  FROM EMP
+  3  WHERE ENAME LIKE 'A%';
+
+COUNT(ENAME)                                                                                                                                                                                            
+------------                                                                                                                                                                                            
+           2                                                                                                                                                                                            
+
+SQL> --WAQTD NO OF EMPLOYEES WORKING AS CLERK OR MANAGER--
+SQL> SELECT COUNT(*)
+  2  FROM EMP
+  3  WHERE JOB IN 'CLERK','MANAGER';
+WHERE JOB IN 'CLERK','MANAGER'
+                    *
+ERROR at line 3:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COUNT(*)
+  2  FROM EMP
+  3* WHERE JOB IN 'CLERK,MANAGER'
+SQL> /
+
+  COUNT(*)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+         0                                                                                                                                                                                              
+
+SQL> --WAQTD TOTAL SAL NEEDED TO PAY EMPLOYEES HIRED IN FEB--
+SQL> SELECT SUM(SAL)
+  2  FROM EMP
+  3  ;
+
+  SUM(SAL)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+     29025                                                                                                                                                                                              
+
+SQL> --WAQTD NO OF EMPLOYEES REPORTING TO 7839(MGR)--
+SQL> SELECT COUNT(*)
+  2  FROM EMP
+  3  WHERE MGR IN '7839';
+
+  COUNT(*)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+         3                                                                                                                                                                                              
+
+SQL> --WAQTD NO OF EMPLOYEES GETTING COMMISSION IN DEPTNO 30--
+SQL> SELECT COUNT(*)
+  2  FROM EMP
+  3  WHERE COMM IS NULL AND DEPTNO IN 30;
+
+  COUNT(*)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+         2                                                                                                                                                                                              
+
+SQL> --WAQTD AVG SAL,TOTAL SAL,NO OF EMPS,AND MAX SAL GIVEN TO EMPLOYEES WORKING AS PRESIDENT--
+SQL> SELECT AVG(SAL),SUM(SAL),COUNT(*),MAX(SAL)
+  2  FROM EMP
+  3  WHERE JOB IN 'PRESIDENT';
+
+  AVG(SAL)   SUM(SAL)   COUNT(*)   MAX(SAL)                                                                                                                                                             
+---------- ---------- ---------- ----------                                                                                                                                                             
+      5000       5000          1       5000                                                                                                                                                             
+
+SQL> --WAQTD NO OF EMPLOYEES HAVING 'A' IN THEIR NAMES--
+SQL> SELECT COUNT(*)
+  2  FROM EMP
+  3  WHERE ENAME LIKE '%A%';
+
+  COUNT(*)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+         7                                                                                                                                                                                              
+
+SQL> --WAQTD NO OF EMPS AND TOTAL SAL NEEDED TO PAY THE EMPLOYEES WHO HAVE 2 CONSECUTIVE L'S IN THIER NAMES--
+SQL> SELECT COUNT(*),SUM(SAL)
+  2  FROM EMP
+  3  WHERE ENAME LIKE '%LL%';
+
+  COUNT(*)   SUM(SAL)                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+         2       2900                                                                                                                                                                                   
+
+SQL> --WAQTD NO OF DPEARTMENTS PRESENT IN EMPLOYEE TABLE--
+SQL> SELECT COUNT(*)
+  2  FROM EMP;
+
+  COUNT(*)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+        14                                                                                                                                                                                              
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COUNT(DEPTNO)
+  2* FROM EMP
+SQL> /
+
+COUNT(DEPTNO)                                                                                                                                                                                           
+-------------                                                                                                                                                                                           
+           14                                                                                                                                                                                           
+
+SQL> --WAQTD NO OF EMPS HAVING CHARACTER 'Z' IN THEIR NAMES--
+SQL> SELECT COUNT(*)
+  2  FROM EMP
+  3  WHERE ENAME LIKE '%Z%';
+
+  COUNT(*)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+         0                                                                                                                                                                                              
+
+SQL> --WAQTD MA SAL GIVEN TO THE EMPS WORKING AS ANALYST--
+SQL> SELECT MAX(SAL)
+  2  FROM EMP
+  3  WHERE JOB IN 'ANALYST';
+
+  MAX(SAL)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+      3000                                                                                                                                                                                              
+
+SQL> --WAQTD NO OF EMPLOYEES HAVING S IN THIER NAMES--
+SQL> SELECT COUNT(*)
+  2  FROM EMP
+  3  WHERE ENAME LIKE '%S%';
+
+  COUNT(*)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+         5                                                                                                                                                                                              
+
+SQL> --WAQTD TOTAL SAL GIVEN TO EMP WOKRING AS CLERK IN DEPT 30--
+SQL> SELECT SUM(SAL)
+  2  FROM EMP
+  3  WHERE JOB IN 'CLERK' AND DEPTNO IN '30';
+
+  SUM(SAL)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+       950                                                                                                                                                                                              
+
+SQL> SPOOL OFF;

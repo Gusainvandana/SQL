@@ -1,0 +1,139 @@
+SQL> SELECT COUNT(*),DEPTNO
+  2  FROM EMP
+  3  WHERE JOB NOT IN 'PRESIDENT'
+  4  GROUP BY DEPTNO;
+
+  COUNT(*)     DEPTNO                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+         6         30                                                                                                                                                                                   
+         5         20                                                                                                                                                                                   
+         2         10                                                                                                                                                                                   
+
+SQL> --WAQTD TOTAL SAL NEEDED TO PAY ALL THE EMPLOYEES IN EACH JOB--
+SQL> SELECT SUM(SAL),JOB
+  2  FROM EMP
+  3  GROUP BY JOB;
+
+  SUM(SAL) JOB                                                                                                                                                                                          
+---------- ---------                                                                                                                                                                                    
+      4150 CLERK                                                                                                                                                                                        
+      5600 SALESMAN                                                                                                                                                                                     
+      5000 PRESIDENT                                                                                                                                                                                    
+      8275 MANAGER                                                                                                                                                                                      
+      6000 ANALYST                                                                                                                                                                                      
+
+SQL> --WAQTD NUMBER OF EMPLOYEES WORKING AS MANAGER IN EACH DEPARTMENT--
+SQL> SELECT COUNT(*),DEPTNO
+  2  FROM EMP
+  3  WHERE JOB IN 'MANAGER'
+  4  GROUP BY DEPTNO;
+
+  COUNT(*)     DEPTNO                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+         1         30                                                                                                                                                                                   
+         1         20                                                                                                                                                                                   
+         1         10                                                                                                                                                                                   
+
+SQL> --WAQTD AVG SALARY NEEDED TO PAY ALL THE EMPLOYEES IN EACH DEPARTMENT EXCLUDING THE EMPLOYEES OF DEPTNO20--
+SQL> SELECT AVG(SAL),DEPTNO
+  2  FROM EMP
+  3  WHERE DEPTNO NOT IN '20'
+  4  GROUP BY DEPTNO;
+
+  AVG(SAL)     DEPTNO                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+1566.66667         30                                                                                                                                                                                   
+2916.66667         10                                                                                                                                                                                   
+
+SQL> --WAQTD NUMBER OF EMPLOYEES HAVING CHARACTER 'A' IN THIER NAMES IN EACH JOB--
+SQL> SELECT COUNT(*),JOB
+  2  FROM EMP
+  3  WHERE ENAME LIKE '%A%'
+  4  GROUP BY JOB;
+
+  COUNT(*) JOB                                                                                                                                                                                          
+---------- ---------                                                                                                                                                                                    
+         3 SALESMAN                                                                                                                                                                                     
+         2 CLERK                                                                                                                                                                                        
+         2 MANAGER                                                                                                                                                                                      
+
+SQL> --QUESTION6--
+SQL> SELECCT COUNT(*),AVG(SAL),DEPTNO
+SP2-0734: unknown command beginning "SELECCT CO..." - rest of line ignored.
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COUNT(*),JOB
+  2  FROM EMP
+  3  WHERE ENAME LIKE '%A%'
+  4* GROUP BY JOB
+SQL> SELECT COUNT(*),AVG(SAL),DEPTNO
+  2  FROM EMP
+  3  WHERE SAL>2000
+  4  GROUP BY DEPTNO;
+
+  COUNT(*)   AVG(SAL)     DEPTNO                                                                                                                                                                        
+---------- ---------- ----------                                                                                                                                                                        
+         1       2850         30                                                                                                                                                                        
+         3 2991.66667         20                                                                                                                                                                        
+         2       3725         10                                                                                                                                                                        
+
+SQL> --Q7--
+SQL> SELECT SUM(SAL),DEPTNO
+  2  FROM EMP
+  3  WHERE JOB IN 'SALESMAN'
+  4  GROUP BY DEPTNO;
+
+  SUM(SAL)     DEPTNO                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+      5600         30                                                                                                                                                                                   
+
+SQL> --QUESTION8--
+SQL> SELECT COUNT(*),JOB
+  2  FROM EMP
+  3  GROUP BY JOB;
+
+  COUNT(*) JOB                                                                                                                                                                                          
+---------- ---------                                                                                                                                                                                    
+         4 CLERK                                                                                                                                                                                        
+         4 SALESMAN                                                                                                                                                                                     
+         1 PRESIDENT                                                                                                                                                                                    
+         3 MANAGER                                                                                                                                                                                      
+         2 ANALYST                                                                                                                                                                                      
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COUNT(*),MAX(SAL),JOB
+  2  FROM EMP
+  3* GROUP BY JOB
+SQL> /
+
+  COUNT(*)   MAX(SAL) JOB                                                                                                                                                                               
+---------- ---------- ---------                                                                                                                                                                         
+         4       1300 CLERK                                                                                                                                                                             
+         4       1600 SALESMAN                                                                                                                                                                          
+         1       5000 PRESIDENT                                                                                                                                                                         
+         3       2975 MANAGER                                                                                                                                                                           
+         2       3000 ANALYST                                                                                                                                                                           
+
+SQL> --QUES9--
+SQL> SELECT MAX(SAL),DEPTNO
+  2  FROM EMP
+  3  GROUP BY DEPTNO;
+
+  MAX(SAL)     DEPTNO                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+      2850         30                                                                                                                                                                                   
+      3000         20                                                                                                                                                                                   
+      5000         10                                                                                                                                                                                   
+
+SQL> --QUES10--
+SQL> SELECT COUNT(SAL)
+  2  FROM EMP;
+
+COUNT(SAL)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+        14                                                                                                                                                                                              
+
+SQL> SPOOL OFF;
