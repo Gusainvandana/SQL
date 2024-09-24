@@ -1,0 +1,190 @@
+SQL> 
+SQL> --Having Clause--
+SQL> --WAQTD DEPTNO AND NUMBER OF EMP WORKING IN EACH DEPT IF THERE ARE ATLEAST 3CLERKS IN EACH DEPT--
+SQL> SELECT DEPTNO,COUNT(EMPNO)
+  2  FROM EMP
+  3  WHERE JOB = 'CLERK'
+  4  GROUP BY DEPTNO
+  5  HAVING COUNT(EMPNO)>=3;
+
+no rows selected
+
+SQL> --WAQTD DEPTNO AND TOTAL SAL NEEDED TO PAY ALL EMP IN EACH DEPT IF THERE ARE ATLEAST 4EMP IN EAEACH DEPT--
+SQL> SELECT DEPTNO,SUM(SAL)
+  2  FROM EMP
+  3  GROUP BY DEPTNO
+  4  HAVING COUNT(DEPTNO)>=4;
+
+    DEPTNO   SUM(SAL)                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+        30       9400                                                                                                                                                                                   
+        20      10875                                                                                                                                                                                   
+
+SQL> --WAQTD NUMBER OF EMP EARNING SAL MORE THAN 1200 IN EACH JOB AND THE TOTAL SAL NEEDED TO PAY EMP OF EACH JOB MUST EXCEEDS 3800--
+SQL> SELECT COUNT(*),SAL
+  2  FROM EMP
+  3  WHERE SAL > 1200
+  4  GROUP BY JOB
+  5  HAVING SUM(SAL) > 3800;
+SELECT COUNT(*),SAL
+                *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COUNT(*),SUM(SAL)
+  2  FROM EMP
+  3  WHERE SAL > 1200
+  4  GROUP BY JOB
+  5* HAVING SUM(SAL) > 3800
+SQL> /
+
+  COUNT(*)   SUM(SAL)                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+         4       5600                                                                                                                                                                                   
+         1       5000                                                                                                                                                                                   
+         3       8275                                                                                                                                                                                   
+         2       6000                                                                                                                                                                                   
+
+SQL> --WAQTD DEPTNO AND NO OF EMP WORKING ONLY IF THERE ARE 2 EMP WORKING IN EACH DEPT AS MANAGER--
+SQL> SELECT DEPTNO, COUNT(EMPNO)
+  2  FROM EMP
+  3  WHERE JOB = 'MANAGER'
+  4  GROUP BY DEPTNO
+  5  HAVING COUNT(EMPNO)> = 2;
+
+no rows selected
+
+SQL> --WAQTD JOB AND MAX SAL OF EMP IN EACH JOB IF THE MAX SAL EXCEEDS 2600--
+SQL> SELECT JOB,MAX(SAL)
+  2  FROM EMP
+  3  GROUP BY JOB
+  4  HAVING MAX(SAL)> 2600;
+
+JOB         MAX(SAL)                                                                                                                                                                                    
+--------- ----------                                                                                                                                                                                    
+PRESIDENT       5000                                                                                                                                                                                    
+MANAGER         2975                                                                                                                                                                                    
+ANALYST         3000                                                                                                                                                                                    
+
+SQL> --WAQTD THE SAL WHICH ARE REPEATED IN EMP--
+SQL> SELECT SAL,COUNT(*)
+  2  FROM EMP
+  3  GROUP BY SAL
+  4  HAVING COUNT(*) > 1;
+
+       SAL   COUNT(*)                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+      1250          2                                                                                                                                                                                   
+      3000          2                                                                                                                                                                                   
+
+SQL> --WAQTD THE HIREDATE WHICH ARE DUPLICATED IN EMP--
+SQL> SELECT HIREDATE,COUNT(*)
+  2  FROM EMP
+  3  GROUP BY HIREDATE
+  4  HAVING COUNT(*) > 1;
+
+HIREDATE    COUNT(*)                                                                                                                                                                                    
+--------- ----------                                                                                                                                                                                    
+03-DEC-81          2                                                                                                                                                                                    
+
+SQL> --WAQTD AVG SAL OF EACH DEPT IF AVG SAL IS LESS THAN 3000--
+SQL> SELECT AVG(SAL),COUNT(*)
+  2  FROM EMP
+  3  GROUP BY DEPTNO
+  4  HAVING AVG(SAL) < 3000;
+
+  AVG(SAL)   COUNT(*)                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+1566.66667          6                                                                                                                                                                                   
+      2175          5                                                                                                                                                                                   
+2916.66667          3                                                                                                                                                                                   
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT AVG(SAL),DEPTNO
+  2  FROM EMP
+  3  GROUP BY DEPTNO
+  4* HAVING AVG(SAL) < 3000
+SQL> /
+
+  AVG(SAL)     DEPTNO                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+1566.66667         30                                                                                                                                                                                   
+      2175         20                                                                                                                                                                                   
+2916.66667         10                                                                                                                                                                                   
+
+SQL> --WAQTD DEPTNO IF THERE ARE ATLEAST 3EMP IN EACH DEPT WHOS NAMES HAS CHAR 'A' OR 'S'--
+SQL> SELECT DEPTNO
+  2  FROM EMP
+  3  WHERE ENAME LIKE '%A%' OR ENAME LIKE '%S%'
+  4  GROUP BY DEPTNO
+  5  HAVING COUNT(EMPNO) >=3;
+
+    DEPTNO                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+        30                                                                                                                                                                                              
+        20                                                                                                                                                                                              
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DEPTNO,EMPNO
+  2  FROM EMP
+  3  WHERE ENAME LIKE '%A%' OR ENAME LIKE '%S%'
+  4  GROUP BY DEPTNO
+  5* HAVING COUNT(EMPNO) >=3
+SQL> /
+SELECT DEPTNO,EMPNO
+              *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DEPTNO,
+  2  FROM EMP
+  3  WHERE ENAME LIKE '%A%' OR ENAME LIKE '%S%'
+  4  GROUP BY DEPTNO
+  5* HAVING COUNT(EMPNO) >=3
+SQL> /
+FROM EMP
+*
+ERROR at line 2:
+ORA-00936: missing expression 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DEPTNO
+  2  FROM EMP
+  3  WHERE ENAME LIKE '%A%' OR ENAME LIKE '%S%'
+  4  GROUP BY DEPTNO
+  5* HAVING COUNT(EMPNO) >=3
+SQL> /
+
+    DEPTNO                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+        30                                                                                                                                                                                              
+        20                                                                                                                                                                                              
+
+SQL> --WAQTD MIN AND MAX SAL OF EACH JOB IF MIN SAL IS MORE THAN 1000 AND MAX SAL IS LESS THAN 5000--
+SQL> SELECT MIN(SAL),MAX(SAL),JOB
+  2  FROM EMP
+  3  GROUP BY JOB
+  4  HAVING MIN(SAL)>1000 AND MAX(SAL)<5000;
+
+  MIN(SAL)   MAX(SAL) JOB                                                                                                                                                                               
+---------- ---------- ---------                                                                                                                                                                         
+      1250       1600 SALESMAN                                                                                                                                                                          
+      2450       2975 MANAGER                                                                                                                                                                           
+      3000       3000 ANALYST                                                                                                                                                                           
+
+SQL> SPOOL OFF;
